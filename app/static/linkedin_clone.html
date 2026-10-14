@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile - Extracted Candidate Live View (Group Webcmder)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --linkedin-blue: #0a66c2;
+            --linkedin-dark-bg: #000000;
+            --linkedin-card-bg: #1d2226;
+            --linkedin-border: #38434f;
+            --text-main: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-emerald: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--linkedin-dark-bg);
+            color: var(--text-main);
+            padding-bottom: 3rem;
+        }
+
+        /* Top Header Navbar */
+        .linkedin-navbar {
+            background: #1d2226;
+            border-bottom: 1px solid var(--linkedin-border);
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .brand-icon {
+            background: var(--linkedin-blue);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 900;
+        }
+
+        .nav-right-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-action {
+            background: var(--linkedin-blue);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-action:hover {
+            background: #004182;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #70b5f9;
+            border: 1px solid #70b5f9;
+        }
+
+        .btn-outline:hover {
+            background: rgba(112, 181, 249, 0.1);
+        }
+
+        /* Profile Layout Container */
+        .profile-container {
+            max-width: 850px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--linkedin-card-bg);
+            border: 1px solid var(--linkedin-border);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Banner & Header Section */
+        .cover-banner {
+            height: 180px;
+            background: linear-gradient(135deg, #0a66c2 0%, #001f3f 50%, #0f172a 100%);
+            position: relative;
+        }
+
+        .profile-header-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid var(--linkedin-card-bg);
+            background: #2b3238;
+            margin-top: -85px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #70b5f9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .profile-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .verified-badge {
+            background: var(--accent-emerald);
+            color: #000;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .profile-headline {
+            font-size: 1rem;
+            color: #e2e8f0;
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+
+        .profile-location {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .contact-info-bar {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.85rem;
+            color: #94a3b8;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Section Cards */
+        .section-header {
+            padding: 1.25rem 1.5rem 0.75rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .about-text {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-pill {
+            background: rgba(10, 102, 194, 0.2);
+            border: 1px solid rgba(10, 102, 194, 0.5);
+            color: #70b5f9;
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-pill-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--accent-emerald);
+            color: #000;
+        }
+
+        /* Education Card Item */
+        .edu-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .edu-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .edu-icon {
+            width: 48px;
+            height: 48px;
+            background: #2b3238;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #70b5f9;
+            flex-shrink: 0;
+        }
+
+        .edu-details {
+            flex: 1;
+        }
+
+        .edu-school {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .edu-degree {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-top: 0.2rem;
+        }
+
+        .edu-dates {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .edu-grade {
+            display: inline-block;
+            margin-top: 0.4rem;
+            background: rgba(16,185,129,0.15);
+            color: #34d399;
+            border: 1px solid rgba(16,185,129,0.3);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-emerald);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="linkedin-navbar">
+        <div class="brand-logo">
+            <span class="brand-icon">in</span>
+            <span>LinkedIn Extracted Candidate Clone <span style="font-size:0.75rem; color:#94a3b8; font-weight:normal;">by Group Webcmder</span></span>
+        </div>
+        <div class="nav-right-actions">
+            <button class="btn-action btn-outline" onclick="copyEntireLinkedInProfile()">📋 Copy Entire Profile Summary</button>
+            <button class="btn-action" onclick="window.close()">← Return to Dashboard</button>
+        </div>
+    </header>
+
+    <div class="profile-container">
+
+        <!-- Header Profile Card -->
+        <div class="card">
+            <div class="cover-banner"></div>
+            <div class="profile-header-body">
+                <div class="avatar-container" id="profile-avatar">MS</div>
+                <div class="profile-name">
+                    <span id="profile-name">Monu Sagar</span>
+                    <span class="badge verified-badge">✓ EXTRACTED PDF DATA</span>
+                </div>
+                <div class="profile-headline" id="profile-headline">
+                    Information Technology Student &bull; Samrat Ashok Technological Institute, Vidisha
+                </div>
+                <div class="profile-location" id="profile-location">
+                    📍 Amarpur, Banka &bull; <a href="#" style="color:#70b5f9; text-decoration:none;" onclick="copyField('profile-location')">Copy Location</a>
+                </div>
+
+                <div class="contact-info-bar">
+                    <div class="contact-item">
+                        <span>📧 Email:</span> <strong id="profile-email">monusagar813101@gmail.com</strong>
+                        <button class="copy-btn" onclick="copyValue('monusagar813101@gmail.com', this)">📋</button>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞 Phone:</span> <strong id="profile-phone">9934872168</strong>
+                        <button class="copy-btn" onclick="copyValue('9934872168', this)">📋</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="card">
+            <div class="section-header">
+                <h3 class="section-title">About</h3>
+                <button class="copy-btn" onclick="copyField('profile-about-text', this)">📋 Copy About Summary</button>
+            </div>
+            <div class="section-body">
+                <p class="about-text" id="profile-about-text">
+                    I am a second-year Information Technology student with a strong interest in programming and problem-solving. I am currently learning languages like C++ and building my understanding of basic computer science concepts. I am eager to develop my technical skills and gain practical experience.
+                </p>
+            </div>
+        </div>
+
+        <!-- Skills Section (Individual Pinned Skills) -->
+        <div class="card">
+            <div class="section-header">
+                <h3 class="section-title">Skills (Extracted Separately 1-by-1)</h3>
+                <button class="copy-btn" onclick="copyField('skills-container', this)">📋 Copy All Skills</button>
+            </div>
+            <div class="section-body">
+                <div class="skills-grid" id="skills-container">
+                    <div class="skill-pill">C++ <button class="copy-pill-btn" onclick="copyValue('C++', this)">📋</button></div>
+                    <div class="skill-pill">Programming <button class="copy-pill-btn" onclick="copyValue('Programming', this)">📋</button></div>
+                    <div class="skill-pill">Information Technology <button class="copy-pill-btn" onclick="copyValue('Information Technology', this)">📋</button></div>
+                    <div class="skill-pill">Problem Solving <button class="copy-pill-btn" onclick="copyValue('Problem Solving', this)">📋</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="card">
+            <div class="section-header">
+                <h3 class="section-title">Education & Grades</h3>
+            </div>
+            <div class="section-body" id="education-container">
+                <!-- Education Item 1 -->
+                <div class="edu-item">
+                    <div class="edu-icon">🎓</div>
+                    <div class="edu-details">
+                        <div class="edu-school">Samrat Ashok Technological Institute, Vidisha</div>
+                        <div class="edu-degree">Btech 1st Year (Information Technology)</div>
+                        <div class="edu-dates">2025 - 2026</div>
+                        <div class="edu-grade">CGPA : 7.45</div>
+                    </div>
+                    <button class="copy-btn" onclick="copyValue('Samrat Ashok Technological Institute, Vidisha - Btech 1st Year (IT) - CGPA 7.45', this)">📋 Copy</button>
+                </div>
+                <!-- Education Item 2 -->
+                <div class="edu-item">
+                    <div class="edu-icon">🏫</div>
+                    <div class="edu-details">
+                        <div class="edu-school">B D Academy Khemichak Amarpur Banka Bihar</div>
+                        <div class="edu-degree">Class 12 (Science)</div>
+                        <div class="edu-dates">2022 - 2024</div>
+                        <div class="edu-grade">Percentage : 71.8%</div>
+                    </div>
+                    <button class="copy-btn" onclick="copyValue('B D Academy - Class 12 Science - 71.8%', this)">📋 Copy</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Load data dynamically from window localStorage or API
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch("/api/profile");
+                const profile = await res.json();
+
+                if (profile && profile.full_name) {
+                    document.getElementById("profile-name").textContent = profile.full_name;
+                    
+                    // Initials for avatar
+                    const parts = profile.full_name.split(" ");
+                    const initials = parts.map(p => p[0]).join("").substring(0, 2).toUpperCase();
+                    document.getElementById("profile-avatar").textContent = initials;
+
+                    document.getElementById("profile-email").textContent = profile.email || "monusagar813101@gmail.com";
+                    document.getElementById("profile-phone").textContent = profile.phone || "9934872168";
+                    document.getElementById("profile-location").textContent = `📍 ${profile.city_state || 'Amarpur, Banka'}`;
+                    
+                    if (profile.career_objective) {
+                        document.getElementById("profile-about-text").textContent = profile.career_objective;
+                    }
+
+                    // Render Skills
+                    const skillsGrid = document.getElementById("skills-container");
+                    if (profile.skills && profile.skills.length > 0) {
+                        skillsGrid.innerHTML = "";
+                        profile.skills.forEach(sk => {
+                            const pill = document.createElement("div");
+                            pill.className = "skill-pill";
+                            pill.innerHTML = `${sk} <button class="copy-pill-btn" onclick="copyValue('${sk}', this)">📋</button>`;
+                            skillsGrid.appendChild(pill);
+                        });
+                    }
+
+                    // Render Education
+                    const eduBox = document.getElementById("education-container");
+                    if (profile.education && profile.education.length > 0) {
+                        eduBox.innerHTML = "";
+                        profile.education.forEach(ed => {
+                            const item = document.createElement("div");
+                            item.className = "edu-item";
+                            const txt = `${ed.school} - ${ed.degree} - Score: ${ed.grade_percentage || '7.45'}`;
+                            item.innerHTML = `
+                                <div class="edu-icon">🎓</div>
+                                <div class="edu-details">
+                                    <div class="edu-school">${ed.school}</div>
+                                    <div class="edu-degree">${ed.degree} (${ed.field_of_study || 'IT'})</div>
+                                    <div class="edu-dates">${ed.start_year || '2025'} - ${ed.end_year || '2026'}</div>
+                                    <div class="edu-grade">Score/Grade: ${ed.grade_percentage || '7.45'}</div>
+                                </div>
+                                <button class="copy-btn" onclick="copyValue('${txt.replace(/'/g, "\\'")}', this)">📋 Copy</button>
+                            `;
+                            eduBox.appendChild(item);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading profile clone data:", e);
+            }
+        });
+
+        async function copyValue(val, btn) {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(val);
+                if (btn) {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = "✓";
+                    setTimeout(() => btn.innerHTML = orig, 1500);
+                }
+            }
+        }
+
+        async function copyField(elementId, btn) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const text = el.innerText || el.textContent;
+            await copyValue(text, btn);
+        }
+
+        async function copyEntireLinkedInProfile() {
+            const name = document.getElementById("profile-name").textContent;
+            const email = document.getElementById("profile-email").textContent;
+            const phone = document.getElementById("profile-phone").textContent;
+            const location = document.getElementById("profile-location").textContent;
+            const about = document.getElementById("profile-about-text").textContent;
+
+            const fullText = `=== LINKEDIN EXTRACTED CANDIDATE PROFILE ===\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Phone: ${phone}\n` +
+                `Location: ${location}\n` +
+                `About Summary: ${about}`;
+
+            await copyValue(fullText);
+            alert("📋 Entire LinkedIn Profile summary copied to system clipboard!");
+        }
+    </script>
+</body>
+</html>

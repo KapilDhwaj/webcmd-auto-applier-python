@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internshala Resume & Profile - Extracted Candidate View (Group Webcmder)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --internshala-blue: #008bdc;
+            --internshala-dark: #121212;
+            --internshala-card: #1e1e1e;
+            --internshala-border: #333333;
+            --internshala-orange: #ff6f61;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-green: #00c853;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--internshala-dark);
+            color: var(--text-main);
+            padding-bottom: 4rem;
+        }
+
+        /* Top Navbar */
+        .is-navbar {
+            background: #1a1a1a;
+            border-bottom: 1px solid var(--internshala-border);
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .is-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--internshala-blue);
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-is {
+            background: var(--internshala-blue);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-is:hover {
+            background: #0077bd;
+        }
+
+        .btn-is-outline {
+            background: transparent;
+            border: 1px solid var(--internshala-blue);
+            color: var(--internshala-blue);
+        }
+
+        .btn-is-outline:hover {
+            background: rgba(0, 139, 220, 0.1);
+        }
+
+        /* Container */
+        .is-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Resume Header Card */
+        .is-card {
+            background: var(--internshala-card);
+            border: 1px solid var(--internshala-border);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .candidate-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--internshala-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .candidate-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .candidate-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .badge-extracted {
+            background: rgba(0, 200, 83, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 200, 83, 0.4);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* Section Block */
+        .is-section {
+            margin-top: 1.5rem;
+        }
+
+        .is-section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--internshala-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Timeline Entries */
+        .timeline-entry {
+            margin-left: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--internshala-blue);
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .timeline-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .timeline-subtitle {
+            font-size: 0.88rem;
+            color: #ccc;
+            margin-top: 0.2rem;
+        }
+
+        .timeline-dates {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .timeline-score {
+            display: inline-block;
+            margin-top: 0.4rem;
+            background: rgba(0, 139, 220, 0.15);
+            color: #64b5f6;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* Skills Pill Container */
+        .skills-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .is-skill-pill {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .copy-pill-btn {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: none;
+            padding: 0.15rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .copy-pill-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .copy-btn {
+            background: rgba(0, 139, 220, 0.15);
+            color: var(--internshala-blue);
+            border: 1px solid rgba(0, 139, 220, 0.3);
+            padding: 0.25rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="is-navbar">
+        <div class="is-brand">
+            <span>🎓 INTERNSHALA Extracted Candidate Resume Clone</span>
+        </div>
+        <div class="nav-btns">
+            <button class="btn-is btn-is-outline" onclick="copyEntireInternshalaResume()">📋 Copy Entire Resume</button>
+            <button class="btn-is" onclick="window.close()">← Return to Dashboard</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="is-container">
+
+        <div class="is-card">
+            <!-- Candidate Header -->
+            <div class="candidate-header-flex">
+                <div>
+                    <h1 class="candidate-name" id="is-name">Monu Sagar</h1>
+                    <div class="candidate-meta">
+                        <div>📧 Email: <strong id="is-email" style="color:#fff;">monusagar813101@gmail.com</strong></div>
+                        <div>📞 Phone: <strong id="is-phone" style="color:#fff;">9934872168</strong></div>
+                        <div>📍 Location: <span id="is-location">Amarpur, Banka</span></div>
+                    </div>
+                </div>
+                <div>
+                    <span class="badge-extracted">✓ VERIFIED PDF PARSED RESUME</span>
+                </div>
+            </div>
+
+            <!-- Career Objective / Summary Section -->
+            <div class="is-section">
+                <div class="is-section-title">
+                    <span>Career Objective / Summary</span>
+                    <button class="copy-btn" onclick="copyText('is-objective', this)">📋 Copy</button>
+                </div>
+                <p id="is-objective" style="color:#ddd; font-size:0.95rem; line-height:1.6;">
+                    I am a second-year Information Technology student with a strong interest in programming and problem-solving. I am currently learning languages like C++ and building my understanding of basic computer science concepts. I am eager to develop my technical skills and gain practical experience.
+                </p>
+            </div>
+
+            <!-- Education Section -->
+            <div class="is-section">
+                <div class="is-section-title">
+                    <span>Education</span>
+                </div>
+                <div id="is-education-list">
+                    <div class="timeline-entry">
+                        <div class="timeline-title">Btech 1st Year (Information Technology)</div>
+                        <div class="timeline-subtitle">Samrat Ashok Technological Institute, Vidisha</div>
+                        <div class="timeline-dates">2025 - 2026</div>
+                        <div class="timeline-score">CGPA : 7.45</div>
+                    </div>
+                    <div class="timeline-entry">
+                        <div class="timeline-title">Class 12 (Science)</div>
+                        <div class="timeline-subtitle">B D Academy Khemichak Amarpur Banka Bihar</div>
+                        <div class="timeline-dates">2022 - 2024</div>
+                        <div class="timeline-score">Percentage : 71.8%</div>
+                    </div>
+                    <div class="timeline-entry">
+                        <div class="timeline-title">Class 10</div>
+                        <div class="timeline-subtitle">B D Academy Khemichak Amarpur Banka Bihar</div>
+                        <div class="timeline-score">Percentage : 90%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="is-section">
+                <div class="is-section-title">
+                    <span>Skills</span>
+                </div>
+                <div class="skills-flex" id="is-skills-list">
+                    <div class="is-skill-pill">C++ <button class="copy-pill-btn" onclick="copyVal('C++', this)">📋</button></div>
+                    <div class="is-skill-pill">Programming <button class="copy-pill-btn" onclick="copyVal('Programming', this)">📋</button></div>
+                    <div class="is-skill-pill">Information Technology <button class="copy-pill-btn" onclick="copyVal('Information Technology', this)">📋</button></div>
+                    <div class="is-skill-pill">Problem Solving <button class="copy-pill-btn" onclick="copyVal('Problem Solving', this)">📋</button></div>
+                </div>
+            </div>
+
+            <!-- Projects & Experience -->
+            <div class="is-section">
+                <div class="is-section-title">
+                    <span>Projects & Work Experience</span>
+                </div>
+                <div class="timeline-entry">
+                    <div class="timeline-title">C++ Programming Practice & Problem Solving</div>
+                    <div class="timeline-subtitle">Worked on fundamental programs involving loops, conditions, arrays, and functions.</div>
+                </div>
+                <div class="timeline-entry">
+                    <div class="timeline-title">Mini Project: Simple Calculator (Python)</div>
+                    <div class="timeline-subtitle">Created a basic calculator using Python to perform arithmetic operations.</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch("/api/profile");
+                const profile = await res.json();
+
+                if (profile && profile.full_name) {
+                    document.getElementById("is-name").textContent = profile.full_name;
+                    document.getElementById("is-email").textContent = profile.email || "monusagar813101@gmail.com";
+                    document.getElementById("is-phone").textContent = profile.phone || "9934872168";
+                    document.getElementById("is-location").textContent = profile.city_state || "Amarpur, Banka";
+                    
+                    if (profile.career_objective) {
+                        document.getElementById("is-objective").textContent = profile.career_objective;
+                    }
+
+                    // Render Education
+                    const eduBox = document.getElementById("is-education-list");
+                    if (profile.education && profile.education.length > 0) {
+                        eduBox.innerHTML = "";
+                        profile.education.forEach(ed => {
+                            const div = document.createElement("div");
+                            div.className = "timeline-entry";
+                            div.innerHTML = `
+                                <div class="timeline-title">${ed.degree} (${ed.field_of_study || 'IT'})</div>
+                                <div class="timeline-subtitle">${ed.school}</div>
+                                <div class="timeline-dates">${ed.start_year || '2025'} - ${ed.end_year || '2026'}</div>
+                                <div class="timeline-score">Score/Grade: ${ed.grade_percentage || '7.45'}</div>
+                            `;
+                            eduBox.appendChild(div);
+                        });
+                    }
+
+                    // Render Skills
+                    const skillsBox = document.getElementById("is-skills-list");
+                    if (profile.skills && profile.skills.length > 0) {
+                        skillsBox.innerHTML = "";
+                        profile.skills.forEach(sk => {
+                            const pill = document.createElement("div");
+                            pill.className = "is-skill-pill";
+                            pill.innerHTML = `${sk} <button class="copy-pill-btn" onclick="copyVal('${sk}', this)">📋</button>`;
+                            skillsBox.appendChild(pill);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading Internshala profile data:", e);
+            }
+        });
+
+        async function copyVal(val, btn) {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(val);
+                if (btn) {
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = "✓";
+                    setTimeout(() => btn.innerHTML = orig, 1500);
+                }
+            }
+        }
+
+        async function copyText(elementId, btn) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            await copyVal(el.innerText || el.textContent, btn);
+        }
+
+        async function copyEntireInternshalaResume() {
+            const name = document.getElementById("is-name").textContent;
+            const email = document.getElementById("is-email").textContent;
+            const phone = document.getElementById("is-phone").textContent;
+            const obj = document.getElementById("is-objective").textContent;
+
+            const text = `=== INTERNSHALA CANDIDATE RESUME ===\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nObjective: ${obj}`;
+            await copyVal(text);
+            alert("📋 Internshala Candidate Resume copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

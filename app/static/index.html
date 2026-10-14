@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcmder AI Agent Auto-Applier Platform (Group Webcmder)</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation with Group Webcmder Branding -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">W</div>
+            <span>Webcmder AI Agent Platform <span style="font-size:0.75rem; color:#94a3b8; font-weight:normal;">by Group Webcmder</span></span>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-btn active" onclick="switchTab('dashboard')">Live Manual Console</button>
+            <button class="nav-btn" onclick="switchTab('profile')">Applicant Profile & Extracted Resume</button>
+            <button class="nav-btn" onclick="window.open('/linkedin-clone', '_blank')" style="background: rgba(10,102,194,0.3); border:1px solid #70b5f9; color:#70b5f9;">🌐 LinkedIn Clone</button>
+            <button class="nav-btn" onclick="window.open('/internshala-clone', '_blank')" style="background: rgba(0,139,220,0.3); border:1px solid #008bdc; color:#64b5f6;">🎓 Internshala Clone</button>
+            <button class="nav-btn" onclick="window.open('/api/download/pdf', '_blank')" style="background: rgba(16,185,129,0.3); border:1px solid #10b981; color:#34d399;">📄 Download Presentation PDF</button>
+            <button class="nav-btn" onclick="switchTab('linkedin')">LinkedIn Test Suite</button>
+            <button class="nav-btn" onclick="switchTab('doctor')">Webcmd Doctor</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- TAB 1: Live Manual Control Console -->
+        <section id="tab-dashboard" class="tab-content active">
+            <!-- Webcmd AI Infrastructure & Session Command Center -->
+            <div class="card" style="background: rgba(15,23,42,0.85); border: 1px solid rgba(139,92,246,0.35); margin-bottom: 1.5rem;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>⚡ Webcmd Core Engine & Browser Daemon Control</span>
+                        <span class="badge badge-purple">@agentrhq/webcmd v0.7.4</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span style="font-size:0.85rem; color:var(--text-muted);">Active Session:</span>
+                        <span id="active-webcmd-session-badge" class="badge badge-blue">NONE (IDLE)</span>
+                    </div>
+                </div>
+
+                <!-- Webcmd CLI Primary Execution Controls -->
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                    <button class="btn btn-primary" style="box-shadow: 0 0 15px rgba(59,130,246,0.4);" onclick="createWebcmdSessionAction()">
+                        ⚡ 1. Create Webcmd Session
+                    </button>
+                    <button class="btn btn-emerald" style="box-shadow: 0 0 15px rgba(16,185,129,0.4);" onclick="runWebcmdEasyApplyAction()">
+                        🤖 2. Run Auto-Applier via Webcmd CloakBrowser
+                    </button>
+                    <button class="btn btn-secondary" onclick="takeWebcmdSnapshotAction()">
+                        📸 3. Capture Webcmd Accessibility Snapshot
+                    </button>
+                    <button class="btn btn-secondary" style="border-color: rgba(239,68,68,0.5); color:#fca5a5;" onclick="closeWebcmdSessionAction()">
+                        ❌ Close Session
+                    </button>
+                    <button class="btn btn-secondary" onclick="runHeadfulBrowserWindow()">
+                        🌐 Launch Microsoft Edge (Visual Demo)
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearTerminal()">
+                        Clear Logs
+                    </button>
+                </div>
+
+                <!-- Webcmd Accessibility Snapshot Diff Viewer -->
+                <div id="webcmd-snapshot-container" style="display:none; background: rgba(10,15,28,0.9); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                        <span style="font-weight:bold; color:var(--accent-cyan); font-size:0.9rem;">
+                            🌳 Webcmd Accessibility Tree Snapshot Diff (Token-Saving Compact Representation)
+                        </span>
+                        <span id="webcmd-timings-badge" class="badge badge-green" style="font-family:var(--font-mono); font-size:0.75rem;">0ms</span>
+                    </div>
+                    <pre id="webcmd-snapshot-text" style="font-family:var(--font-mono); font-size:0.8rem; color:#93c5fd; max-height:220px; overflow-y:auto; white-space:pre-wrap; background:rgba(0,0,0,0.3); padding:0.75rem; border-radius:6px;"></pre>
+                </div>
+
+                <!-- 🔐 LinkedIn Login Console -->
+                <div style="background: rgba(30,58,138,0.25); border: 1px solid rgba(59,130,246,0.4); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                    <div style="font-weight: bold; color: #60a5fa; margin-bottom: 0.5rem;">🔐 Direct LinkedIn Login (Launches in Microsoft Edge)</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 0.5rem; align-items: center;">
+                        <input type="email" id="linkedin-login-email" class="form-control" placeholder="LinkedIn Email / Username">
+                        <input type="password" id="linkedin-login-password" class="form-control" placeholder="LinkedIn Password">
+                        <button class="btn btn-emerald" onclick="executeLinkedInLogin(false)">🌐 Microsoft Edge Login</button>
+                        <button class="btn btn-primary" onclick="executeLinkedInLogin(true)">⚡ Fast Auto Login</button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Target Job Application URL (Enter any link here):</label>
+                    <div class="input-copy-group">
+                        <input type="text" id="custom-session-url" class="form-control" placeholder="http://localhost:8000/linkedin-clone">
+                        <button class="copy-btn" onclick="copyFieldToClipboard('custom-session-url', this)">📋 Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Live Interactive Form Canvas -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📄 Interactive Form Filler Canvas</span>
+                            <span class="badge badge-purple">LIVE FORM CANVAS</span>
+                        </div>
+                        <button class="btn btn-emerald" onclick="manualPopulateCanvas()">Populate Extracted Data</button>
+                    </div>
+
+                    <form id="canvas-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="canvas-name" class="form-control" placeholder="Kapil Dhwaj Singh Baghel">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('canvas-name', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-copy-group">
+                                <input type="email" id="canvas-email" class="form-control" placeholder="kaps2917official@gmail.com">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('canvas-email', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="canvas-phone" class="form-control" placeholder="+91 8720863149">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('canvas-phone', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Location / City</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="canvas-city" class="form-control" placeholder="Jayant">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('canvas-city', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Career Objective / Summary</label>
+                            <div class="input-copy-group">
+                                <textarea id="canvas-objective" class="form-control" rows="2" placeholder="Motivated B.Tech student skilled in Python..."></textarea>
+                                <button class="copy-btn" onclick="copyFieldToClipboard('canvas-objective', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Extracted Skills</label>
+                            <div id="canvas-skills-pills" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.3rem;">
+                                <span class="badge badge-blue">Python</span>
+                                <span class="badge badge-blue">Pandas</span>
+                                <span class="badge badge-blue">NumPy</span>
+                                <span class="badge badge-blue">MySQL</span>
+                                <span class="badge badge-blue">C++</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+                            <button type="button" class="btn btn-secondary" onclick="manualClearCanvas()">Clear Canvas</button>
+                            <button type="button" class="btn btn-emerald" onclick="manualSubmitCanvas()">Submit Form Manually</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Real-time Console Log Terminal -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>⚡ Real-Time Webcmd Log Terminal</span>
+                            <span class="badge badge-purple">WEBSOCKET</span>
+                        </div>
+                    </div>
+                    <div id="log-terminal" class="terminal">
+                        <div class="terminal-line info">[Group Webcmder] Webcmd AI Agent Manual Control Terminal Ready.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: Applicant Profile & PDF Upload Manager -->
+        <section id="tab-profile" class="tab-content">
+            <!-- PDF Upload Card -->
+            <div class="card" style="border: 2px dashed rgba(59,130,246,0.4); background: rgba(15,23,42,0.6); margin-bottom: 1.5rem;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📄 PDF Resume Parser & Data Extractor</span>
+                        <span class="badge badge-purple">PDF EXTRACTION ENGINE</span>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Upload any <strong>PDF Resume</strong>. Group Webcmder's PDF parser will extract <strong>EVERY SINGLE DETAIL</strong> with 1-click clipboard copy buttons for every box!
+                </p>
+
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <input type="file" id="pdf-file-input" accept=".pdf" class="form-control" style="max-width: 400px;">
+                    <button class="btn btn-primary" onclick="uploadResumePDF()">Extract All Details from PDF</button>
+                    <span id="pdf-upload-status" style="font-size: 0.85rem; color: var(--accent-emerald);"></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>👤 Complete Extracted Profile & Resume Details (With 1-Click Clipboard Buttons)</span>
+                        <span class="badge badge-blue">CLIPBOARD READY</span>
+                    </div>
+                    <div style="display:flex; gap:0.5rem;">
+                        <button type="button" class="btn btn-primary" onclick="copyAllExtractedDetailsToClipboard(this)">📋 Copy ALL Extracted Details to Clipboard</button>
+                        <button type="button" class="btn btn-emerald" onclick="saveProfile()">Save Profile</button>
+                    </div>
+                </div>
+
+                <form id="profile-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="prof-full-name" class="form-control">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('prof-full-name', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-copy-group">
+                                <input type="email" id="prof-email" class="form-control">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('prof-email', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="prof-phone" class="form-control">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('prof-phone', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Location / City</label>
+                            <div class="input-copy-group">
+                                <input type="text" id="prof-city" class="form-control">
+                                <button class="copy-btn" onclick="copyFieldToClipboard('prof-city', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Career Objective / Summary</label>
+                            <div class="input-copy-group">
+                                <textarea id="prof-objective" class="form-control" rows="2"></textarea>
+                                <button class="copy-btn" onclick="copyFieldToClipboard('prof-objective', this)">📋 Copy</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual Skills Section (Each Skill in its own box with Copy Button!) -->
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--accent-cyan);">Individual Skills List (Copy 1 Skill at a Time for 'Add Skill' Modal)</h4>
+                    <div id="individual-skills-list" class="form-grid">
+                        <!-- Rendered by JS: Individual skills with Copy buttons -->
+                    </div>
+
+                    <!-- Structured Education History Section (Matches 'Add Education' Dialog Box fields) -->
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--accent-cyan);">Structured Education & 'Add Education' Dialog Fields</h4>
+                    <div id="education-history-list" style="display:flex; flex-direction:column; gap:1rem;">
+                        <!-- Rendered by JS: Structured fields matching 'Add Education' dialog box -->
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- TAB 3: LinkedIn Test Suite -->
+        <section id="tab-linkedin" class="tab-content">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💼 LinkedIn Easy Apply Test Suite</span>
+                            <span class="badge badge-amber">TEST SUITE</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Executes LinkedIn Easy Apply form filler test case. Choose your execution engine:
+                    </p>
+
+                    <div style="display:flex; gap:1.5rem; margin-bottom:1.25rem; background:rgba(0,0,0,0.25); padding:0.75rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+                        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; cursor:pointer;">
+                            <input type="radio" name="test-engine-choice" value="webcmd" checked style="accent-color:var(--accent-purple);">
+                            <span style="font-weight:600; color:#c084fc;">⚡ Webcmd CloakBrowser (Official Core)</span>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; cursor:pointer;">
+                            <input type="radio" name="test-engine-choice" value="headful" style="accent-color:var(--primary);">
+                            <span style="font-weight:600; color:#60a5fa;">🌐 Headful Edge (Visible Window)</span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-emerald" style="width: 100%; margin-bottom: 1.5rem; box-shadow:0 0 15px rgba(16,185,129,0.3);" onclick="runLinkedInTestCase()">
+                        ▶ Execute LinkedIn Easy Apply Test Case
+                    </button>
+
+                    <div id="test-results-container" style="display: none;">
+                        <h4 style="margin-bottom: 0.75rem;">Test Execution Results</h4>
+                        <div id="test-status-card" style="padding: 1rem; border-radius: 10px; margin-bottom: 1rem;"></div>
+
+                        <h4>Steps Completed:</h4>
+                        <div id="steps-tracker" class="step-tracker"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🔍 LinkedIn Form Test Preview</span>
+                        </div>
+                    </div>
+                    <iframe id="preview-iframe" style="width: 100%; height: 380px; border: 1px solid var(--bg-card-border); border-radius: 10px; background: #0f172a;" srcdoc="<h4 style='color:#94a3b8; text-align:center; padding-top:140px;'>Click 'Execute LinkedIn Easy Apply Test Case' to view preview</h4>"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: Webcmd Doctor Diagnostic Console -->
+        <section id="tab-doctor" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>🩺 Webcmd CLI & System Health Doctor</span>
+                        <span class="badge badge-blue">SYSTEM CHECK</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="runDoctorCheck()">Run Doctor Diagnostics</button>
+                </div>
+                <div id="doctor-results-json" class="terminal" style="height: 400px;">
+                    <div class="terminal-line info">Click 'Run Doctor Diagnostics' to check `@agentrhq/webcmd` binary and environment state.</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="margin-bottom: 0.75rem;">
+            Webcmder AI Agent Deployment & LinkedIn Auto-Applier Platform &bull; Built by <strong>Group Webcmder</strong>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; font-size: 0.85rem;">
+            <span>⭐ Support WebCMD Open Source:</span>
+            <a href="https://github.com/agentrhq/webcmd" target="_blank" style="color: #60a5fa; text-decoration: underline;">GitHub: agentrhq/webcmd</a>
+            &bull;
+            <a href="https://forms.gle/PQUeejZcbsMA7M7X8" target="_blank" style="color: #34d399; text-decoration: underline;">Submit Fork Link</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
